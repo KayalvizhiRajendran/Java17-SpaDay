@@ -3,13 +3,50 @@
 <head>
     <meta charset="UTF-8" />
     <title>Spa Menu</title>
-    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
 <h1>My Super Fancy Spa</h1>
 <div id = "clientProfile">
+    <h2>My Profile</h2>
+    <p th:text = "${name}"></p>
+    <p th:text = "${skintype}"></p>
+    <p th:text ="${manipedi}"></p>
 </div>
 <div id = "servicesMenu">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Facial Type</th>
+        </tr>
+        </thead>
+        <tr th:each="facial : ${appropriateFacials}">
+            <td th:text="${facial}"></td>
+        </tr>
+    </table>
+    <th:block th:if = "${manipedi} == 'Both'">
+        <h3>Manicure and Pedicure</h3>
+    </th:block>
+
+    <th:block th:unless = "${manipedi} == 'Both'">
+        <h3 th:text="${manipedi}">Default Selection</h3>
+    </th:block>
+
+
+    <div th:if="${manipedi} == 'Manicure'">
+        <div th:replace="fragments :: manicureDescription"></div>
+    </div>
+
+    <div th:if="${manipedi} == 'Pedicure'">
+        <div th:replace="fragments :: pedicureDescription"></div>
+    </div>
+
+    <div th:if="${manipedi} == 'Both'">
+        <div th:replace="fragments :: pedicureDescription"></div>
+        <div th:replace="fragments :: manicureDescription"></div>
+    </div>
+
 </div>
 </body>
 </html>
